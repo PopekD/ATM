@@ -2,33 +2,37 @@ package com.company;
 
 public class Card {
     String nameCard;
-    int cardNumber;
-    String  experationmDate;
+    String cardNumber;
+    String expirationDate;
+    String pin;
     int cvv;
+    int amount;
+
+
 
     public Card() {
         nameCard = "";
-        cardNumber = 0;
-        experationmDate = "";
+        cardNumber = "";
+        expirationDate = "";
         cvv = 0;
+        amount = 0;
+        pin = "";
     }
 
     public String getNameCard() { return nameCard; }
 
     public void setNameCard(String nameCard) { this.nameCard = nameCard; }
 
-    public int getCardNumber() { return cardNumber; }
+    public String getCardNumber() { return cardNumber; }
 
-    public void setCardNumber(int cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+
+    public String getExpirationDate() {
+        return expirationDate;
     }
 
-    public String getExperationmDate() {
-        return experationmDate;
-    }
-
-    public void setExperationmDate(String experationmDate) {
-        this.experationmDate = experationmDate;
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public int getCvv() {
@@ -38,5 +42,13 @@ public class Card {
     public void setCvv(int cvv) {
         this.cvv = cvv;
     }
+
+    public int getAmount() { return amount; }
+
+    public void setAmount(int amount) { this.amount = amount; }
+
+    public String getPin() { return pin; }
+
+    public void setPin(String pin) { this.pin = pin; }
 
 }
