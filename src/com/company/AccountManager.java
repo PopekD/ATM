@@ -12,6 +12,7 @@ public class AccountManager {
     Console console = System.console();
 
     public void CreateAccount() {
+
         Scanner scanner = new Scanner(console.reader());
 
         console.writer().println("CardName");

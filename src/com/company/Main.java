@@ -3,11 +3,12 @@ import java.io.Console;
 import java.util.Scanner;
 
 public class Main extends DataBase {
+    public static String uN;
     public static void main(String[] args) throws Exception {
-
         AccountManager acc = new AccountManager();
         DataBase db = new DataBase();
         db.Connection();
+        UI ui = new UI();
         Console console = System.console();
         Scanner scanner = new Scanner(console.reader());
         try {
@@ -27,15 +28,14 @@ public class Main extends DataBase {
         }catch (Exception e) {
             throw new Exception("Console is not visible", e);
         }
-
             console.writer().println("Insert your Username");
             int i = 0;
-
+            scanner.nextLine();
             while(true){
-                scanner.nextLine();
-                String uN = scanner.nextLine();
+                uN = scanner.nextLine();
                 String usernames = "SELECT Username FROM Users";
-                if(db.SqlStatement(usernames, uN)){
+                boolean isTrue = db.SqlStatement(usernames, uN);
+                if(isTrue){
                     break;
                 }else{
                     i++;
@@ -46,10 +46,19 @@ public class Main extends DataBase {
                     System.out.println("Incorrect Username"+ "\r\n" + "Please insert the correct username;" + " Remaining chances(" + (3-i) + ")");
                 }
             }
+            String sql = "SELECT PIN from Users WHERE Username = "+"'"+uN+"'";
+            String findPin = db.FindPin(sql);
             while(true){
                 console.writer().println("Insert your PIN");
-                String pin = "SELECT PIN FROM Users";
+                String pin = scanner.nextLine();
+                if (findPin.equals(pin)){
+                    console.writer().println("LogIn successfully");
+                    break;
+                }else {
+                    console.writer().println("Pin is incorrect");
+                }
             }
 
+            ui.UserInterface(uN);
     }
 }
