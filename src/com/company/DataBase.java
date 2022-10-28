@@ -89,6 +89,7 @@ public class DataBase {
         return null;
     }
     public void close()throws Exception{
+        stmt.close();
         c.close();
     }
     public void UpdateAmount(int after, String usr){

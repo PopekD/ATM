@@ -1,10 +1,20 @@
 package com.company;
 import java.io.Console;
+import java.io.File;
 import java.util.Scanner;
 
 public class Main extends DataBase {
     public static String uN;
+
+    public static void clearScreen()throws Exception {
+            if (System.getProperty("os.name").contains("Windows"))
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+            Runtime.getRuntime().exec("clear");
+    }
+
     public static void main(String[] args) throws Exception {
+        clearScreen();
         AccountManager acc = new AccountManager();
         DataBase db = new DataBase();
         db.Connection();
@@ -17,6 +27,7 @@ public class Main extends DataBase {
             while (true) {
                 int choice = scanner.nextInt();
                 if (choice == 2) {
+                    clearScreen();
                     acc.CreateAccount();
                     break;
                 } else if (choice == 1) {
@@ -28,6 +39,7 @@ public class Main extends DataBase {
         }catch (Exception e) {
             throw new Exception("Console is not visible", e);
         }
+            clearScreen();
             console.writer().println("Insert your Username");
             int i = 0;
             scanner.nextLine();
@@ -43,9 +55,11 @@ public class Main extends DataBase {
                         System.out.println("Too many mistakes");
                         return;
                     }
+                    clearScreen();
                     System.out.println("Incorrect Username"+ "\r\n" + "Please insert the correct username;" + " Remaining chances(" + (3-i) + ")");
                 }
             }
+            clearScreen();
             String sql = "SELECT PIN from Users WHERE Username = "+"'"+uN+"'";
             String findPin = db.FindPin(sql);
             while(true){
@@ -53,6 +67,7 @@ public class Main extends DataBase {
                 String pin = scanner.nextLine();
                 if (findPin.equals(pin)){
                     console.writer().println("LogIn successfully");
+                    clearScreen();
                     break;
                 }else {
                     console.writer().println("Pin is incorrect");
