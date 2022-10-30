@@ -1,5 +1,7 @@
 package com.company;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBase {
     Connection c = null;
@@ -24,6 +26,7 @@ public class DataBase {
                 }
             }
             stmt.executeQuery(sql);
+
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -49,19 +52,18 @@ public class DataBase {
             String usr = "INSERT INTO Users(Username, PIN) VALUES ('"+cardName+"','"+pin+"')";
             stmt = c.createStatement();
             stmt.executeUpdate(usr);
-            stmt.close();
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
 
         try{
-
             stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery(getusr);
             String uId = rs.getString(1);
             String sql = "INSERT INTO Card('Card Number', CVV, Expiration, id) VALUES ('"+cardNumber+"',"+cvv+",'"+expiration+"',"+uId+")";
             stmt.executeUpdate(sql);
             stmt.close();
+            c.close();
 
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -91,6 +93,31 @@ public class DataBase {
     public void close()throws Exception{
         stmt.close();
         c.close();
+    }
+    public List<String> allInfo(String user){
+        String get = "SELECT id FROM Users WHERE Username = "+"'"+user+"'";
+        List<String> Information = new ArrayList<>();
+
+        try{
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery(get);
+            int uid = rs.getInt(1);
+            String sql = "SELECT * FROM Card WHERE id = "+"'"+uid+"'";
+
+            stmt = c.createStatement();
+            ResultSet info = stmt.executeQuery(sql);
+
+            while(info.next()) {
+                Information.add(info.getString(2));
+                Information.add(info.getString(3));
+                Information.add(info.getString(4));
+                Information.add(info.getString(6));
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        return Information;
     }
     public void UpdateAmount(int after, String usr){
 

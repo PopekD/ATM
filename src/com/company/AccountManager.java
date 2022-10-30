@@ -10,9 +10,8 @@ public class AccountManager {
     Card card = new Card();
     DataBase db = new DataBase();
     Console console = System.console();
-
-    public void CreateAccount() {
-
+    public void CreateAccount()throws Exception {
+        db.Connection();
         Scanner scanner = new Scanner(console.reader());
 
         console.writer().println("CardName");
@@ -68,6 +67,5 @@ public class AccountManager {
             }
         }
         db.InsertAcc(card.getNameCard(), card.getPin(), card.getCardNumber(), card.getCvv(), card.getExpirationDate());
-
     }
 }
